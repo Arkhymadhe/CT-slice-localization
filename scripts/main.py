@@ -15,7 +15,7 @@ def configure_args():
                         default = os.path.join(os.getcwd().replace('scripts', 'data'),
                                                'ct-dataset.csv'))
     
-    parser.add_argument('--arch_dir', type = str, default = os.path.join(os.getcwd().replace('notebooks', 'data'),
+    parser.add_argument('--arch_dir', type = str, default = os.path.join(os.getcwd().replace('scripts', 'data'),
                                                                          'ct-dataset.zip'))
     
     parser.add_argument('--style', type = str, default = 'gruvboxd', help = 'Visualization style',
@@ -46,6 +46,11 @@ def configure_args():
     parser.add_arhument('--show_valid', type = bool, default = True, choices = [True, False],
                         help = 'Show validation metrrics?')
     
+    parser.add_argument('--save', type = bool, default = True, choices = [True, False], help = 'Save model artefacts?')
+    
+    parser.add_argument('--artefact_dir', type = bool, default = os.getcwd().replace('scripts', 'artefacts'),
+                        help = 'Location for saved model')
+    
     parser.add_argument('--task', default = 'classif', type = str, choices = ['classif', 'regression'],
                         help = 'Type of experience, E')
     
@@ -54,6 +59,7 @@ def configure_args():
 
 
 def main():
+    !pip install jupyterthemes
     print('>>> Configure CLI arguments...')
     args = configure_args().parse_args()
     print('>> CLI arguments configured!')
@@ -104,10 +110,17 @@ def main():
     print()
     
     if args.show_valid:
-        print(get_r2_score(y_valid model.predict(X_valid), num_places=5, text=True))
+        print(get_r2_score(y_valid, model.predict(X_valid), num_places=5, text=True))
         print()
         
     print(get_r2_score(y_test, model.predict(X_test), num_places=5, text=True))
+    
+    if args.save:
+        os.makedirs(args.artefact_dir)
+        DIR = os.path.join(args.artefact_dir, 'model.pkl')
+        
+        with open(DIR, 'wb') as f:
+            pickle.dump(model, f)
 
 
 
