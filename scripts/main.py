@@ -3,6 +3,9 @@ import os
 import torch
 
 from data_ops import read_compress, read_dataset
+from data_ops import get_invariant_features, variables
+from data_ops import array_to_tensor, split_data
+
 from model_utils import train_model, import_model
 
 
@@ -12,11 +15,10 @@ def configure_args():
     parser = argparse.ArgumentParser(description = 'Argument name space for CLI flags.')
     
     parser.add_argument('--data_dir', type = str, help = 'Data directory',
-                        default = os.path.join(os.getcwd().replace('scripts', 'data'),
-                                               'ct-dataset.csv'))
+                        default = os.path.join(os.getcwd().replace('scripts', 'data'), 'ct-dataset.csv'))
     
-    parser.add_argument('--arch_dir', type = str, default = os.path.join(os.getcwd().replace('scripts', 'data'),
-                                                                         'ct-dataset.zip'))
+    parser.add_argument('--arch_dir', type = str, help = 'Directory for generated compressed data file',
+                        default = os.path.join(os.getcwd().replace('scripts', 'data'), 'ct-dataset.zip'))
     
     parser.add_argument('--style', type = str, default = 'gruvboxd', help = 'Visualization style',
                         choices = ['gruvboxd', 'solarizedd', 'solarizedl', 'normal', 'chesterish'])
@@ -41,17 +43,19 @@ def configure_args():
     
     parser.add_argument('--split', type = float, default = 0.2, help = 'Validation split while fitting?')
     
-    parser.add_argumet('--valid', type = bool, choice = [True, False], default = True, help = 'Validation split?')
+    parser.add_argument('--valid', type = bool, choice = [True, False], default = True,
+                        help = 'Validation split?')
     
-    parser.add_arhument('--show_valid', type = bool, default = True, choices = [True, False],
+    parser.add_argument('--show_valid', type = bool, default = True, choices = [True, False],
                         help = 'Show validation metrrics?')
     
-    parser.add_argument('--save', type = bool, default = True, choices = [True, False], help = 'Save model artefacts?')
+    parser.add_argument('--save', type = bool, default = True, choices = [True, False],
+                        help = 'Save model artefacts?')
     
     parser.add_argument('--artefact_dir', type = bool, default = os.getcwd().replace('scripts', 'artefacts'),
                         help = 'Location for saved model')
     
-    parser.add_argument('--task', default = 'classif', type = str, choices = ['classif', 'regression'],
+    parser.add_argument('--task', default = 'regression', type = str, choices = ['classif', 'regression'],
                         help = 'Type of experience, E')
     
     return parser
@@ -59,7 +63,6 @@ def configure_args():
 
 
 def main():
-    !pip install jupyterthemes
     print('>>> Configure CLI arguments...')
     args = configure_args().parse_args()
     print('>> CLI arguments configured!')
@@ -68,6 +71,7 @@ def main():
     print('>>> Importing dataset...')
     data, path_to_archive = read_compress(path_to_data = args.data_dir,
                                           path_to_archive = args.arch_dir)
+
     print('>>> Dataset imported successfully!')
     print()
     
@@ -93,7 +97,7 @@ def main():
     
     ### Instantiate model object
     model = import_model(task = args.task, n_features = args.n_features, n_classes = args.classes,
-                         optim = torch.optim.SGD, lr = args.lr, max_epochs = args.max_epochs,
+                         optim = torch.optim.SGD, lr = args.lr, max_epochs = args.epochs,
                          batch_size = args.batch_size, split = args.split)
     
     ### Train model
@@ -106,18 +110,22 @@ def main():
     print('>>> Displaying diagnostics...')
     print()
     
+    ### Train scores
     print(get_r2_score(y_train, model.predict(X_train), num_places=5, text=True))
     print()
     
     if args.show_valid:
+        ### Validation scores
         print(get_r2_score(y_valid, model.predict(X_valid), num_places=5, text=True))
         print()
         
+    ### Test scores
     print(get_r2_score(y_test, model.predict(X_test), num_places=5, text=True))
     
     if args.save:
-        os.makedirs(args.artefact_dir)
-        DIR = os.path.join(args.artefact_dir, 'model.pkl')
+        ### Save artefacts
+        if not os.path.exists(os.makedirs(args.artefact_dir)):
+            DIR = os.path.join(args.artefact_dir, 'trained_model.pkl')
         
         with open(DIR, 'wb') as f:
             pickle.dump(model, f)

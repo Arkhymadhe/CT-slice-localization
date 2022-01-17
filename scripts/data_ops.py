@@ -9,6 +9,7 @@ import numpy as np
 
 import torch
 from scipy.io import arff
+
 from sklearn.model_selection import train_test_split
 
 
@@ -38,7 +39,7 @@ def read_dataset(data_dir : str) -> pd.DataFrame:
 def variables(data, labels, target : str, axis = 1, return_y = True):
     ''' Return covariates and target. '''
     
-    assert type(target) in [str, list], 'Target must be a feature name  or list of feature names.'
+    assert type(target) in [str, list], 'Target must be a feature name or list of feature names.'
     
     duplicates = data.duplicated()
     print(f'Number of duplicate records: {duplicates.shape[0]}')
@@ -99,6 +100,12 @@ def get_invariant_features(X : pd.DataFrame, cardinality = 50, percent : float =
 def array_to_tensor(array):
     """ Convert NumPy array to torch.Tensor. """
     assert type(array) in [pd.DataFrame, pd.Series, np.ndarray], 'Array must be of type `pd.DataFrame`, `pd.Series`, or `np.ndarray`.'
+
+    if type(array) in [pd.DataFrame, pd.Series]:
+        array = array.values
+    else:
+        pass
+
     return torch.from_numpy(array).to(torch.float32)
 
 
