@@ -13,6 +13,7 @@ The class variable (i.e. relative location of an image on the axial axis) was co
 
 ## Demo
 ![GIF 1](https://github.com/Archymade/CT-slice-localization/blob/main/ct-slice-1.webp)
+
 ![GIF 2](https://github.com/Archymade/CT-slice-localization/blob/main/ct-slice-2.webp)
 
 ## Features and Attribute Information
