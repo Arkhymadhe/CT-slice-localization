@@ -3,6 +3,11 @@
 
 **Relative location of CT slices on axial axis Data Set**
 
+## Stack
+[![Python 3.6](https://img.shields.io/badge/python-3.6-blue.svg)](https://www.python.org/downloads/release/python-360/)
+
+## Overview
+
 The dataset comprises 386 features (including ID and target feature, radial axis location) extracted from CT images.
 
 The class variable is of the numeric kind, and denotes the relative location of the CT slice on the axial axis of the human body. The data was retrieved from a set of 53500 CT images from 74 different patients (43 male, 31 female).
