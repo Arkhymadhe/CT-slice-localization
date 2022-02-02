@@ -26,6 +26,7 @@ class MyNet(nn.Module):
     def forward(self, x):
         x = torch.relu(self.layer1(x))
         x = torch.relu(self.layer2(x))
+
         x = torch.softmax(self.layer3(x)) if self.task == 'classif' else self.layer3(x)
         
         return x

@@ -115,3 +115,5 @@ def split_data(X, y, split_size=0.2):
     X_1, X_2, y_1, y_2 = train_test_split(X, y, test_size=split_size, stratify=y)
 
     return X_1, X_2, y_1, y_2
+
+
