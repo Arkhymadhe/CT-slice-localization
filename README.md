@@ -10,6 +10,12 @@
 
 ## Overview
 
+## Stack
+[![Python 3.6](https://img.shields.io/badge/python-3.6-blue.svg)](https://www.python.org/downloads/release/python-360/)
+![PyCharm](https://img.shields.io/badge/PyCharm-000000.svg?&style=for-the-badge&logo=PyCharm&logoColor=white)
+
+## Overview
+
 The dataset comprises 386 features (including ID and target feature, radial axis location) extracted from CT images.
 
 The class variable is of the numeric kind, and denotes the relative location of the CT slice on the axial axis of the human body. The data was retrieved from a set of 53500 CT images from 74 different patients (43 male, 31 female).
@@ -19,7 +25,9 @@ Each CT slice is described by two histograms in polar space. The first histogram
 The class variable (i.e. relative location of an image on the axial axis) was constructed by manually annotating up to 10 different distinct landmarks in each CT Volume with known location. The location of slices in between landmarks was interpolated.
 
 ## Demo
+![GIF 1](https://github.com/Archymade/CT-slice-localization/blob/main/ct-slice-1.webp)
 
+![GIF 2](https://github.com/Archymade/CT-slice-localization/blob/main/ct-slice-2.webp)
 
 ## Features and Attribute Information
 
