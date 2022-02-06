@@ -3,8 +3,6 @@
 """ Utilities for model instantiation, training, and prediction.
 """
 
-import pandas as pd
-
 from skorch import NeuralNetRegressor
 from skorch import NeuralNetClassifier
 
@@ -14,11 +12,11 @@ from neural_net import MyNet
 def prepare_net(task, n_features, n_classes):
     """ Return nueral network. """
     
-    net = MyNet(task = task, n_features = n_features, n_classes)
+    net = MyNet(task = task, n_features = n_features, n_classes = n_classes)
     return net
 
 
-def import_model(optim : torch.optim.Optimizer, task : str, n_features : int,
+def import_model(optim, task : str, n_features : int,
                  n_classes : int, lr : float, max_epochs : int,
                  batch_size : int, split : float):
     
@@ -42,7 +40,7 @@ def train_model(model, X, y):
     return model
 
 
-def get_predictions(model, features):
+def get_predictions(model, features, return_features = True):
     """ Obtain predictions for a set of features. """
     
     pred = model.predict(features)

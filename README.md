@@ -31,10 +31,10 @@ The class variable (i.e. relative location of an image on the axial axis) was co
 
 ## Features and Attribute Information
 
-- Feature 1 (patientId): Each ID identifies a different patient
-- Features 2 to 241: Histogram describing bone structures
-- Features 242 to 385: Histogram describing air inclusions
-- Feature 386 (target variable; reference): Relative location of the image on the axial axis in degrees (class value). Values are in the range [0; 180] where 0 denotes the top of the head and 180 the soles of the feet.
+- Feature `1` (patientId): Each ID identifies a different patient
+- Features `2` to `241`: Histogram describing bone structures
+- Features `242` to `385`: Histogram describing air inclusions
+- Feature `386` (target variable; reference): Relative location of the image on the axial axis in degrees (class value). Values are in the range [0; 180] where 0 denotes the top of the head and 180 the soles of the feet.
 
 
 ## Training procedure

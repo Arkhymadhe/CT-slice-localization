@@ -39,18 +39,23 @@ def read_dataset(data_dir : str) -> pd.DataFrame:
 def variables(data, labels, target : str, axis = 1, return_y = True):
     ''' Return covariates and target. '''
     
-    assert type(target) in [str, list], 'Target must be a feature name or list of feature names.'
+    assert type(target) in [str, list], 'Target must be a feature name (str) or list of feature names.'
     
     duplicates = data.duplicated()
-    print(f'Number of duplicate records: {duplicates.shape[0]}')
+    print(f'Number of duplicate records: {duplicates.shape[0]}\n')
     
     data = data.drop_duplicates()
-    data = data.dropna(axis = 0, subset = target)
+    data = data.dropna(axis = 0, subset = target if type(target) == list else [target,])
+
+    if type(target) == list:
+        labels += target
+    else:
+        labels.extend([target, 'patientId'])
     
     X = data.drop(labels = labels, axis = axis)
     
     print(f'Number of observations: {X.shape[0]}',
-          f'Feature dimensionality: {X.shape[1]}')
+          f'\nFeature dimensionality: {X.shape[1]}')
     
     if return_y:
         y = data.loc[:, target]
@@ -60,13 +65,13 @@ def variables(data, labels, target : str, axis = 1, return_y = True):
         else:
             y = y.values.reshape(X.shape[0], len(target))
         
-        print(f'Number of available targets: {y.shape[0]}',
-              f'Target variable(s): {y.shape[1]}')
+        print(f'\nNumber of available targets: {y.shape[0]}',
+              f'\nTarget variable(s): {y.shape[1]}')
     else:
         y = None
-        print('No target variables returned')
+        print('No target variables returned.')
     
-    return X, y if y else X
+    return (X, y) if y is not None else X
 
 
 def get_invariant_features(X : pd.DataFrame, cardinality = 50, percent : float = 0.8):
@@ -80,7 +85,7 @@ def get_invariant_features(X : pd.DataFrame, cardinality = 50, percent : float =
 
     for feature in cat_features:
         counts = X[feature].value_counts(normalize = True)
-        print(f'Feature diagnostics (Feature `{feature})` :')
+        print(f'Feature diagnostics (Feature `{feature}`) :')
 
         if counts.max() > percent:
             to_drop.append(feature)
@@ -109,10 +114,10 @@ def array_to_tensor(array):
     return torch.from_numpy(array).to(torch.float32)
 
 
-def split_data(X, y, split_size=0.2):
+def split_data(X, y, split_size=0.2, stratify = False):
     """ Split dataset for model evaluation and testing. """
 
-    X_1, X_2, y_1, y_2 = train_test_split(X, y, test_size=split_size, stratify=y)
+    X_1, X_2, y_1, y_2 = train_test_split(X, y, test_size=split_size, stratify=y if stratify else None)
 
     return X_1, X_2, y_1, y_2
 
