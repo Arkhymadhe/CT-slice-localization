@@ -48,12 +48,13 @@ The fully-connected neural network was built via the `PyTorch` library, for the 
 ```
 $ cd scripts
 ```
+2. Ensure compressed data file is decompressed into the `data` directory
 
-2. Run the `main.py` file.
+3. Run the `main.py` file.
 ```
 $ python3 main.py --arg_key arg_value
 ```
-3. Arguments available include:
+4. Arguments available include:
    ```
    - epochs
    - task ('classif' or 'regression')
