@@ -25,9 +25,9 @@ Each CT slice is described by two histograms in polar space. The first histogram
 The class variable (i.e. relative location of an image on the axial axis) was constructed by manually annotating up to 10 different distinct landmarks in each CT Volume with known location. The location of slices in between landmarks was interpolated.
 
 ## Demo
-![GIF 1](ct-slice-1.webp)
+![GIF 1](gifs/ct-slice-1.webp)
 
-![GIF 2](ct-slice-2.webp)
+![GIF 2](gifs/ct-slice-2.webp)
 
 ## Features and Attribute Information
 
