@@ -1,12 +1,12 @@
-Vanilla Sci-kit Learn    
+Sci-kit Learn    
     Notebook name: Starter Notebook
     Problem Class : Regression
     Performance Metric : Accuracy
-    Performance : 86.3 %
+    Performance : 84.4 %
     Tricks : None
     
 PyTorch/Skorch
-    Notebook name: Phase 1
+    Notebook name: Skorch notebook
     Problem Class : Regression
     Performance Metric : Accuracy
     Performance : ~ 99.7 %
