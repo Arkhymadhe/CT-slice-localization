@@ -36,12 +36,14 @@ The class variable (i.e. relative location of an image on the axial axis) was co
 - Features `242` to `385`: Histogram describing air inclusions
 - Feature `386` (target variable; reference): Relative location of the image on the axial axis in degrees (class value). Values are in the range [0; 180] where 0 denotes the top of the head and 180 the soles of the feet.
 
-Link to the dataset may be obtained below.
+A link to the dataset may be obtained below.
 
 ## Training procedure
-The task was modelled as a `regression` task, and two models were fit on the dataset: an `SVM`, and a neural network.
+The task could be modelled either as a `regression` or `classification` task. In this instance, the modelling was done via `regression`. A number of models were fit on the dataset: a `LinearRegression` model, an `SVM`, and a neural network.
 
-The fully-connected neural network was built via the `PyTorch` library, for the regression task described in the `Overview` above. The network was wrapped via the `Skorch` API, to render it compatible with the `Scikit Learn` API. The resulting model was trained for `20` epochs, with a learning rate of `1e-4`, and a batch size of `16`.
+The fully-connected neural network was built via the `PyTorch` library, for the regression task described in the `Overview` above. The network was wrapped via the `Skorch` API, to render it compatible with the `Scikit Learn` API. The final model was obtained after training for `20` epochs, with a learning rate of `1e-4`, and a batch size of `16`.
+
+A compressed form of the dataset is provided, with abstractions to decompress and compress as required.
 
 ## Quick start
 1. Navigate to the `scripts` folder:
@@ -66,9 +68,9 @@ $ python3 main.py --arg_key arg_value
 
 
 ## Performance
-The performance of the `Skorch` model `(~99%)` outstripped the vanilla `Scikit Learn` model `(~86%)` via a considerable margin.
+The performance of the `Skorch` neural network `(~99%)` outstripped the vanilla `LogisticRegression` model from `Scikit Learn` `(~86%)` via a considerable margin.
 
-An exploratory hypothesis for why this was so might be that the network, by virtue of the `RELU` non-linearities present, was able to learn non-linear features from the dataset. 
+An exploratory hypothesis for why this was so might be that the network, by virtue of the `RELU` non-linearities present, was able to learn non-linear features from the dataset.
 
 ## Appendix
 
