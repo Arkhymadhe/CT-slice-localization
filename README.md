@@ -39,7 +39,7 @@ The class variable (i.e. relative location of an image on the axial axis) was co
 A link to the dataset may be obtained below.
 
 ## Training procedure
-The task could be modelled either as a `regression` or `classification` task. In this instance, the modelling was done via `regression`. A number of models were fit on the dataset: a `LinearRegression` model, an `SVM`, and a neural network.
+The task could be modelled either as a `regression` or `classification` task. In this instance, the modelling was done via `regression`. Two models were fit on the dataset: a `LinearSVR` model, an `SVM`, and a neural network.
 
 The fully-connected neural network was built via the `PyTorch` library, for the regression task described in the `Overview` above. The network was wrapped via the `Skorch` API, to render it compatible with the `Scikit Learn` API. The final model was obtained after training for `20` epochs, with a learning rate of `1e-4`, and a batch size of `16`.
 
