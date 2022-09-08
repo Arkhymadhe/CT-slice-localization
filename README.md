@@ -68,7 +68,7 @@ $ python3 main.py --arg_key arg_value
 
 
 ## Performance
-The performance of the `Skorch` neural network `(~99%)` outstripped the vanilla `LogisticRegression` model from `Scikit Learn` `(~86%)` via a considerable margin.
+The performance of the `Skorch` neural network `(~99%)` outstripped the vanilla `LinearSVR` model from `Scikit Learn` `(~84%)` via a considerable margin.
 
 An exploratory hypothesis for why this was so might be that the network, by virtue of the `RELU` non-linearities present, was able to learn non-linear features from the dataset.
 
